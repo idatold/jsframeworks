@@ -1,5 +1,6 @@
 // src/app/product/[id]/page.tsx
 import Image from 'next/image'
+import AddToCartButton from '@/components/AddToCartButton'
 import { getProductById } from '@/lib/productApi'
 import { Product } from '@/features/products/types'
 import { chango, robotoMono } from '@/lib/fonts'
@@ -65,20 +66,7 @@ export default async function ProductPage({ params }: Props) {
           </div>
 
           {/* Add to Bag */}
-          <button
-            className="
-              mt-auto
-              inline-block
-              bg-[#696956]
-              text-white
-              px-6 py-3
-              rounded-md
-              hover:bg-opacity-90
-              transition
-            "
-          >
-            Add to Bag
-          </button>
+          <AddToCartButton product={product} />
         </div>
       </div>
 
@@ -102,5 +90,3 @@ export default async function ProductPage({ params }: Props) {
     </main>
   )
 }
-
-

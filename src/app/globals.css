@@ -1,6 +1,17 @@
 /* globals.css */
 @import "tailwindcss";
 
+
+@keyframes grow-plant {
+  0%, 100% { transform: scale(0.8); opacity: 0.6; }
+  50%       { transform: scale(1.2); opacity: 1; }
+}
+
+.animate-grow-plant {
+  animation: grow-plant 1.5s ease-in-out infinite;
+}
+
+
 /* 1) Map your Next font variables into theme tokens */
 @theme {
   --font-chango:        var(--font-chango);

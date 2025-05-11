@@ -1,19 +1,20 @@
 // src/components/Header.tsx
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
+import Image from "next/image"
+import { useCartStore } from "@/lib/cartStore"
 
 export default function Header() {
-  // Temporarily hard‐code cart count until cart is wired up
-  const count = 0
+  // subscribe just to the items length sum
+  const count = useCartStore((state) =>
+    state.items.reduce((sum, i) => sum + i.quantity, 0)
+  )
 
   return (
     <header className="bg-[#FDFCED] shadow-sm">
-      {/* Use the same .container px-4 as your main so edges align */}
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="block">
+        <Link href="/">
           <div className="relative w-32 h-10">
             <Image
               src="/logo.svg"
@@ -24,12 +25,12 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* Cart Icon */}
         <Link href="/cart" className="relative block">
-          <img
+          <Image
             src="/bag.svg"
             alt="Cart"
-            className="h-8 w-8"
+            width={24}
+            height={24}
           />
           {count > 0 && (
             <span className="absolute -top-1 -right-2 flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-red-500 rounded-full">
