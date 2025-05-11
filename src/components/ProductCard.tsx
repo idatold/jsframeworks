@@ -6,12 +6,15 @@ import { chango, robotoMono } from '@/lib/fonts'
 interface Props { product: Product }
 
 export default function ProductCard({ product }: Props) {
-  const hasDiscount = product.discountedPrice < product.price
-  const discountPct = hasDiscount
-    ? Math.round((1 - product.discountedPrice / product.price) * 100)
-    : 0
   const originalPrice = product.price
-  const displayPrice = hasDiscount ? product.discountedPrice : originalPrice
+  // Ensure we always have a number for discountedPrice
+  const discPrice = product.discountedPrice ?? originalPrice
+  // Only treat it as a discount if it was explicitly provided and is less than the original
+  const hasDiscount = product.discountedPrice != null && discPrice < originalPrice
+  const discountPct = hasDiscount
+    ? Math.round((1 - discPrice / originalPrice) * 100)
+    : 0
+  const displayPrice = discPrice
 
   return (
     <div

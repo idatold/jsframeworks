@@ -1,4 +1,4 @@
-// src/app/contact/page.tsx
+
 import { metadata as rootMeta } from "../layout"
 import { chango, robotoMono } from "@/lib/fonts"
 import ContactForm from "@/components/ContactForm"

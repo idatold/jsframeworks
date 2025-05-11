@@ -1,6 +1,6 @@
 // src/lib/cartStore.ts
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
+import { persist, createJSONStorage } from "zustand/middleware"
 import type { Product } from "@/features/products/types"
 
 export interface CartItem {
@@ -17,13 +17,12 @@ interface CartState {
 
 export const useCartStore = create<CartState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       items: [],
       addToCart: (product, qty = 1) => {
         set((state) => {
           const idx = state.items.findIndex((i) => i.product.id === product.id)
           if (idx > -1) {
-            // already in cart: bump quantity
             const items = [...state.items]
             items[idx] = {
               product,
@@ -31,7 +30,6 @@ export const useCartStore = create<CartState>()(
             }
             return { items }
           }
-          // new item
           return { items: [...state.items, { product, quantity: qty }] }
         })
       },
@@ -43,8 +41,8 @@ export const useCartStore = create<CartState>()(
       clearCart: () => set({ items: [] }),
     }),
     {
-      name: "cart-storage",              // key in localStorage
-      getStorage: () => localStorage,    // use browser storage
+      name: "cart-storage",  
+      storage: createJSONStorage(() => localStorage),
     }
   )
 )

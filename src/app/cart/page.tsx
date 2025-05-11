@@ -12,10 +12,12 @@ export default function CartPage() {
   const items = useCartStore((s) => s.items)
   const removeFromCart = useCartStore((s) => s.removeFromCart)
   const clearCart = useCartStore((s) => s.clearCart)
-  const total = items.reduce(
-    (sum, { product, quantity }) => sum + product.discountedPrice * quantity,
-    0
-  )
+
+  // Use discountedPrice if available, otherwise fall back to price
+  const total = items.reduce((sum, { product, quantity }) => {
+    const unitPrice = product.discountedPrice ?? product.price
+    return sum + unitPrice * quantity
+  }, 0)
 
   const handleCheckout = () => {
     clearCart()
@@ -39,57 +41,62 @@ export default function CartPage() {
       ) : (
         <>
           <div className="space-y-4 mb-8">
-            {items.map(({ product, quantity }) => (
-              <div
-                key={product.id}
-                className="flex items-center gap-4 border-b pb-4"
-              >
-                {/* Product image */}
-                <div className="w-16 h-16 relative rounded overflow-hidden">
-                  <Image
-                    src={product.image.url}
-                    alt={product.image.alt}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+            {items.map(({ product, quantity }) => {
+              const unitPrice = product.discountedPrice ?? product.price
+              const lineTotal = unitPrice * quantity
 
-                {/* Title and qty */}
-                <div className="flex-1">
-                  <h2 className="font-medium">{product.title}</h2>
-                  <p>Qty: {quantity}</p>
-                </div>
-
-                {/* Line-item total */}
-                <p className="font-semibold">
-                  ${(product.discountedPrice * quantity).toFixed(2)}
-                </p>
-
-                {/* Remove one item */}
-                <button
-                  onClick={() => removeFromCart(product.id)}
-                  className="ml-2 text-gray-500 hover:text-red-600 cursor-pointer"
-                  aria-label="Remove item"
+              return (
+                <div
+                  key={product.id}
+                  className="flex items-center gap-4 border-b pb-4"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                  {/* Product image */}
+                  <div className="w-16 h-16 relative rounded overflow-hidden">
+                    <Image
+                      src={product.image.url}
+                      alt={product.image.alt}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+
+                  {/* Title and qty */}
+                  <div className="flex-1">
+                    <h2 className="font-medium">{product.title}</h2>
+                    <p>Qty: {quantity}</p>
+                  </div>
+
+                  {/* Line-item total */}
+                  <p className="font-semibold">
+                    ${lineTotal.toFixed(2)}
+                  </p>
+
+                  {/* Remove one item */}
+                  <button
+                    onClick={() => removeFromCart(product.id)}
+                    className="ml-2 text-gray-500 hover:text-red-600 cursor-pointer"
+                    aria-label="Remove item"
                   >
-                    <path d="M3 6h18" />
-                    <path d="M8 6v14a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6" />
-                    <path d="M10 11v6" />
-                    <path d="M14 11v6" />
-                    <path d="M5 6l1-3h12l1 3" />
-                  </svg>
-                </button>
-              </div>
-            ))}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M3 6h18" />
+                      <path d="M8 6v14a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6" />
+                      <path d="M10 11v6" />
+                      <path d="M14 11v6" />
+                      <path d="M5 6l1-3h12l1 3" />
+                    </svg>
+                  </button>
+                </div>
+              )
+            })}
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-between">

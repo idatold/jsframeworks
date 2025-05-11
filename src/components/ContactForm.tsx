@@ -1,15 +1,15 @@
 // src/components/ContactForm.tsx
-"use client"
+"use client";
 
-import { useForm } from "react-hook-form"
-import { Toaster, toast } from "react-hot-toast"
+import { useForm } from "react-hook-form";
+import { Toaster, toast } from "react-hot-toast";
 
 type FormValues = {
-  fullName: string
-  subject: string
-  email: string
-  message: string
-}
+  fullName: string;
+  subject: string;
+  email: string;
+  message: string;
+};
 
 export default function ContactForm() {
   const {
@@ -17,27 +17,22 @@ export default function ContactForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<FormValues>()
+  } = useForm<FormValues>();
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async () => {
     try {
-      // Simulate network request
-      await new Promise((res) => setTimeout(res, 500))
-      toast.success("Message sent!")
-      reset()
-    } catch (err) {
-      toast.error("Failed to send message.")
+      await new Promise((res) => setTimeout(res, 500));
+      toast.success("Message sent!");
+      reset();
+    } catch {
+      toast.error("Failed to send message.");
     }
-  }
+  };
 
   return (
     <>
       <Toaster />
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        noValidate
-        className="space-y-6"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
         {/* Full Name */}
         <div>
           <label
@@ -106,17 +101,14 @@ export default function ContactForm() {
             {...register("email", {
               required: "Email is required",
               pattern: {
-                value:
-                  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                 message: "Invalid email address",
               },
             })}
             className="mt-1 block w-full px-3 py-2 border-2 border-[#696956] rounded focus:outline-none"
           />
           {errors.email && (
-            <p className="mt-1 text-sm text-red-600">
-              {errors.email.message}
-            </p>
+            <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
           )}
         </div>
 
@@ -156,5 +148,5 @@ export default function ContactForm() {
         </button>
       </form>
     </>
-  )
+  );
 }

@@ -1,3 +1,4 @@
+// src/app/page.client.tsx
 "use client"
 
 import { useState, useMemo } from "react"
@@ -13,40 +14,51 @@ export default function HomePageClient({ products }: { products: Product[] }) {
   const [sort, setSort] = useState<SortOption["value"]>("price-asc")
 
   const sortOptions: SortOption[] = [
-    { label: "Price: Low → High", value: "price-asc" },
-    { label: "Price: High → Low", value: "price-desc" },
-    { label: "Name: A → Z",      value: "name-asc" },
-    { label: "Name: Z → A",      value: "name-desc" },
+    { label: "Price: Low → High",  value: "price-asc"  },
+    { label: "Price: High → Low",  value: "price-desc" },
+    { label: "Name: A → Z",        value: "name-asc"   },
+    { label: "Name: Z → A",        value: "name-desc"  },
   ]
 
   const filteredAndSorted = useMemo(() => {
-    let list = products.filter((p) =>
+    // 1) filter
+    const filtered = products.filter(p =>
       p.title.toLowerCase().includes(search.toLowerCase())
     )
 
+    // 2) copy before sorting
+    const sorted = [...filtered]
+
+    // 3) default to price (use discountedPrice if available)
+    const getPrice = (p: Product) => p.discountedPrice ?? p.price
+
     switch (sort) {
       case "price-asc":
-        list.sort((a, b) => (a.discountedPrice < b.discountedPrice ? -1 : 1))
+        sorted.sort((a, b) => getPrice(a) - getPrice(b))
         break
       case "price-desc":
-        list.sort((a, b) => (a.discountedPrice > b.discountedPrice ? -1 : 1))
+        sorted.sort((a, b) => getPrice(b) - getPrice(a))
         break
       case "name-asc":
-        list.sort((a, b) => a.title.localeCompare(b.title))
+        sorted.sort((a, b) => a.title.localeCompare(b.title))
         break
       case "name-desc":
-        list.sort((a, b) => b.title.localeCompare(a.title))
+        sorted.sort((a, b) => b.title.localeCompare(a.title))
         break
     }
 
-    return list
+    return sorted
   }, [products, search, sort])
 
   return (
     <main className={`container mx-auto px-4 py-4 space-y-6 ${robotoMono.className}`}>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-6 mb-6">
         <SearchBar value={search} onChange={setSearch} />
-        <SortDropdown options={sortOptions} selected={sort} onChange={setSort} />
+        <SortDropdown
+          options={sortOptions}
+          selected={sort}
+          onChange={(value) => setSort(value as SortOption["value"])}
+        />
       </div>
 
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
