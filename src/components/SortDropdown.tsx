@@ -20,24 +20,34 @@ export default function SortDropdown({
   onChange,
 }: SortDropdownProps) {
   return (
-    <select
-      value={selected}
-      onChange={(e: ChangeEvent<HTMLSelectElement>) => onChange(e.target.value)}
-      className="
-        ml-0 sm:ml-4
-        mt-4 sm:mt-0
-        px-3 py-2
-        border-2 border-[#696956]
-        rounded
-        focus:outline-none
-        hover:cursor-pointer
-      "
-    >
-      {options.map((opt) => (
-        <option key={opt.value} value={opt.value}>
-          {opt.label}
-        </option>
-      ))}
-    </select>
+    <div>
+      <label htmlFor="sort-select" className="sr-only">
+        Sort by
+      </label>
+
+      <select
+        id="sort-select"
+        value={selected}
+        onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+          onChange(e.target.value)
+        }
+        className="
+          ml-0 sm:ml-4
+          mt-4 sm:mt-0
+          px-3 py-2
+          bg-[#FDFCED]
+          border-2 border-[#696956]
+          rounded
+          focus:outline-none
+          hover:cursor-pointer
+        "
+      >
+        {options.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 }
