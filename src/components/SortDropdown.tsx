@@ -1,18 +1,17 @@
-// src/components/SortDropdown.tsx
-"use client"
+"use client";
 
-import { ChangeEvent } from "react"
+import { ChangeEvent } from "react";
 
 export type SortOption =
   | { label: "Price: Low → High"; value: "price-asc" }
   | { label: "Price: High → Low"; value: "price-desc" }
-  | { label: "Name: A → Z";    value: "name-asc" }
-  | { label: "Name: Z → A";    value: "name-desc" }
+  | { label: "Name: A → Z"; value: "name-asc" }
+  | { label: "Name: Z → A"; value: "name-desc" };
 
 interface SortDropdownProps {
-  options: SortOption[]
-  selected: string
-  onChange: (value: string) => void
+  options: SortOption[];
+  selected: string;
+  onChange: (value: string) => void;
 }
 
 export default function SortDropdown({
@@ -23,9 +22,7 @@ export default function SortDropdown({
   return (
     <select
       value={selected}
-      onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-        onChange(e.target.value)
-      }
+      onChange={(e: ChangeEvent<HTMLSelectElement>) => onChange(e.target.value)}
       className="
         ml-0 sm:ml-4
         mt-4 sm:mt-0
@@ -42,5 +39,5 @@ export default function SortDropdown({
         </option>
       ))}
     </select>
-  )
+  );
 }

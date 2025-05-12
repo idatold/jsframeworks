@@ -1,15 +1,13 @@
-// src/components/Header.tsx
-"use client"
+"use client";
 
-import Link from "next/link"
-import Image from "next/image"
-import { useCartStore } from "@/lib/cartStore"
+import Link from "next/link";
+import Image from "next/image";
+import { useCartStore } from "@/lib/cartStore";
 
 export default function Header() {
-  // subscribe just to the items length sum
   const count = useCartStore((state) =>
     state.items.reduce((sum, i) => sum + i.quantity, 0)
-  )
+  );
 
   return (
     <header className="bg-[#FDFCED] shadow-sm">
@@ -26,12 +24,7 @@ export default function Header() {
         </Link>
 
         <Link href="/cart" className="relative block">
-          <Image
-            src="/bag.svg"
-            alt="Cart"
-            width={24}
-            height={24}
-          />
+          <Image src="/bag.svg" alt="Cart" width={24} height={24} />
           {count > 0 && (
             <span className="absolute -top-1 -right-2 flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-red-500 rounded-full">
               {count}
@@ -40,5 +33,5 @@ export default function Header() {
         </Link>
       </div>
     </header>
-  )
+  );
 }

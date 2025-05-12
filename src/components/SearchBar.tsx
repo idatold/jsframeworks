@@ -1,12 +1,11 @@
-// src/components/SearchBar.tsx
-"use client"
+"use client";
 
-import { ChangeEvent } from "react"
+import { ChangeEvent } from "react";
 
 interface SearchBarProps {
-  value: string
-  onChange: (newValue: string) => void
-  placeholder?: string
+  value: string;
+  onChange: (newValue: string) => void;
+  placeholder?: string;
 }
 
 export default function SearchBar({
@@ -29,6 +28,5 @@ export default function SearchBar({
         hover:cursor-text
       "
     />
-  )
+  );
 }
-

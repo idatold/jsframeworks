@@ -1,18 +1,18 @@
-// src/lib/cartStore.ts
-import { create } from "zustand"
-import { persist, createJSONStorage } from "zustand/middleware"
-import type { Product } from "@/features/products/types"
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import type { Product } from "@/features/products/types";
 
 export interface CartItem {
-  product: Product
-  quantity: number
+  product: Product;
+  quantity: number;
 }
 
 interface CartState {
-  items: CartItem[]
-  addToCart: (product: Product, qty?: number) => void
-  removeFromCart: (id: string) => void
-  clearCart: () => void
+  items: CartItem[];
+  addToCart: (product: Product, qty?: number) => void;
+  decrement: (id: string) => void; // ← new
+  removeFromCart: (id: string) => void;
+  clearCart: () => void;
 }
 
 export const useCartStore = create<CartState>()(
@@ -21,28 +21,39 @@ export const useCartStore = create<CartState>()(
       items: [],
       addToCart: (product, qty = 1) => {
         set((state) => {
-          const idx = state.items.findIndex((i) => i.product.id === product.id)
+          const idx = state.items.findIndex((i) => i.product.id === product.id);
           if (idx > -1) {
-            const items = [...state.items]
+            const items = [...state.items];
             items[idx] = {
               product,
               quantity: items[idx].quantity + qty,
-            }
-            return { items }
+            };
+            return { items };
           }
-          return { items: [...state.items, { product, quantity: qty }] }
-        })
+          return { items: [...state.items, { product, quantity: qty }] };
+        });
+      },
+
+      decrement: (id) => {
+        set((state) => {
+          const items = state.items
+            .map((i) =>
+              i.product.id === id ? { ...i, quantity: i.quantity - 1 } : i
+            )
+            .filter((i) => i.quantity > 0);
+          return { items };
+        });
       },
       removeFromCart: (id) => {
         set((state) => ({
           items: state.items.filter((i) => i.product.id !== id),
-        }))
+        }));
       },
       clearCart: () => set({ items: [] }),
     }),
     {
-      name: "cart-storage",  
+      name: "cart-storage",
       storage: createJSONStorage(() => localStorage),
     }
   )
-)
+);
