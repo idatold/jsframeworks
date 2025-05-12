@@ -1,15 +1,14 @@
+"use client";
 
-"use client"
-
-import { useForm } from "react-hook-form"
-import { toast } from "react-hot-toast"
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
 type FormValues = {
-  fullName: string
-  subject: string
-  email: string
-  message: string
-}
+  fullName: string;
+  subject: string;
+  email: string;
+  message: string;
+};
 
 export default function ContactForm() {
   const {
@@ -17,24 +16,21 @@ export default function ContactForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<FormValues>()
+  } = useForm<FormValues>();
 
-  // Called when form validation passes
   const onSubmit = async () => {
     try {
-      // simulate network latency
-      await new Promise((res) => setTimeout(res, 500))
-      toast.success("Message sent!")
-      reset()
+      await new Promise((res) => setTimeout(res, 500));
+      toast.success("Message sent!");
+      reset();
     } catch {
-      toast.error("Failed to send message.")
+      toast.error("Failed to send message.");
     }
-  }
+  };
 
-  // Called when form validation fails
   const onError = () => {
-    toast.error("Please fix the errors in the form and try again.")
-  }
+    toast.error("Please fix the errors in the form and try again.");
+  };
 
   return (
     <form
@@ -63,9 +59,7 @@ export default function ContactForm() {
           className="mt-1 block w-full px-3 py-2 border-2 border-[#696956] rounded focus:outline-none"
         />
         {errors.fullName && (
-          <p className="mt-1 text-sm text-red-600">
-            {errors.fullName.message}
-          </p>
+          <p className="mt-1 text-sm text-red-600">{errors.fullName.message}</p>
         )}
       </div>
 
@@ -90,9 +84,7 @@ export default function ContactForm() {
           className="mt-1 block w-full px-3 py-2 border-2 border-[#696956] rounded focus:outline-none"
         />
         {errors.subject && (
-          <p className="mt-1 text-sm text-red-600">
-            {errors.subject.message}
-          </p>
+          <p className="mt-1 text-sm text-red-600">{errors.subject.message}</p>
         )}
       </div>
 
@@ -117,9 +109,7 @@ export default function ContactForm() {
           className="mt-1 block w-full px-3 py-2 border-2 border-[#696956] rounded focus:outline-none"
         />
         {errors.email && (
-          <p className="mt-1 text-sm text-red-600">
-            {errors.email.message}
-          </p>
+          <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
         )}
       </div>
 
@@ -144,9 +134,7 @@ export default function ContactForm() {
           className="mt-1 block w-full px-3 py-2 border-2 border-[#696956] rounded focus:outline-none"
         />
         {errors.message && (
-          <p className="mt-1 text-sm text-red-600">
-            {errors.message.message}
-          </p>
+          <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
         )}
       </div>
 
@@ -158,5 +146,5 @@ export default function ContactForm() {
         {isSubmitting ? "Sending…" : "Send Message"}
       </button>
     </form>
-  )
+  );
 }

@@ -1,4 +1,3 @@
-// src/components/SearchBar.tsx
 "use client";
 
 import { ChangeEvent } from "react";
@@ -16,7 +15,6 @@ export default function SearchBar({
 }: SearchBarProps) {
   return (
     <div>
-      {/* Accessible label, visually hidden */}
       <label htmlFor="search-input" className="sr-only">
         Search products
       </label>
