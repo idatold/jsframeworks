@@ -1,3 +1,4 @@
+// src/components/SearchBar.tsx
 "use client";
 
 import { ChangeEvent } from "react";
@@ -14,19 +15,29 @@ export default function SearchBar({
   placeholder = "Search products…",
 }: SearchBarProps) {
   return (
-    <input
-      type="search"
-      value={value}
-      onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
-      placeholder={placeholder}
-      className="
-        w-full max-w-md
-        px-3 py-2
-        border-2 border-[#696956]
-        rounded
-        focus:outline-none
-        hover:cursor-text
-      "
-    />
+    <div>
+      {/* Accessible label, visually hidden */}
+      <label htmlFor="search-input" className="sr-only">
+        Search products
+      </label>
+      <input
+        id="search-input"
+        type="search"
+        value={value}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          onChange(e.target.value)
+        }
+        placeholder={placeholder}
+        className="
+          w-full max-w-md
+          px-3 py-2
+          bg-[#FDFCED]
+          border-2 border-[#696956]
+          rounded
+          focus:outline-none
+          hover:cursor-text
+        "
+      />
+    </div>
   );
 }
