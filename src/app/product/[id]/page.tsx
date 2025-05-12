@@ -8,9 +8,11 @@ import { chango, robotoMono } from "@/lib/fonts";
 export default async function ProductPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const product: Product = await getProductById(params.id);
+  // Await the async params in Next.js 15+
+  const { id } = await params;
+  const product: Product = await getProductById(id);
   const tags = product.tags ?? [];
   const reviews = product.reviews ?? [];
   const unitPrice = product.discountedPrice ?? product.price;
@@ -74,7 +76,7 @@ export default async function ProductPage({
               <div key={rev.id} className="border-b pb-4">
                 <div className="flex items-center justify-between mb-1">
                   <span className="font-medium">{rev.username}</span>
-                  <span className="font-bold text-black-500">
+                  <span className="font-bold text-gray-700">
                     ⭐ {rev.rating}
                   </span>
                 </div>
