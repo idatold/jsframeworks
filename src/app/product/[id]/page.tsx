@@ -1,4 +1,3 @@
-// src/app/product/[id]/page.tsx
 import Image from "next/image";
 import AddToCartButton from "@/components/AddToCartButton";
 import { getProductById } from "@/lib/productApi";
@@ -10,7 +9,6 @@ export default async function ProductPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  // Await the async params in Next.js 15+
   const { id } = await params;
   const product: Product = await getProductById(id);
   const tags = product.tags ?? [];
