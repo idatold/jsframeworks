@@ -158,4 +158,4 @@ src/
 └─ styles/
    └─ globals.css
 ```
-Happy coding! 🍐 (Pistachio 🥜)
+Happy coding! 🍐 (Ida @ Pistachio 🥜) 

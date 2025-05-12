@@ -1,14 +1,15 @@
+// src/app/product/[id]/page.tsx
 import Image from "next/image";
 import AddToCartButton from "@/components/AddToCartButton";
 import { getProductById } from "@/lib/productApi";
 import { Product } from "@/features/products/types";
 import { chango, robotoMono } from "@/lib/fonts";
 
-interface Props {
+export default async function ProductPage({
+  params,
+}: {
   params: { id: string };
-}
-
-export default async function ProductPage({ params }: Props) {
+}) {
   const product: Product = await getProductById(params.id);
   const tags = product.tags ?? [];
   const reviews = product.reviews ?? [];
