@@ -36,18 +36,17 @@ export default async function ProductPage({
         ))}
       </div>
 
-      <p className="text-gray-700">{product.description}</p>
-
-      {/* Image under description */}
+      {/* Fixed-size, soft-edged image (matches card feel) */}
       <div className="my-6">
-        <Image
-          src={product.image.url}
-          alt={product.image.alt || product.title}
-          width={1200}
-          height={800}
-          className="mx-auto w-full h-auto"
-          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 60vw, 800px"
-        />
+        <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow">
+          <Image
+            src={product.image.url}
+            alt={product.image.alt || product.title}
+            fill
+            className="object-cover object-center"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 60vw, 800px"
+          />
+        </div>
       </div>
 
       {/* Price on the right side under the image */}
@@ -69,16 +68,19 @@ export default async function ProductPage({
       </div>
 
       {/* Add to Bag directly under the price, right-aligned */}
-      <div className="mt-4 mb-8 flex justify-end">
+      <div className="mt-4 mb-6 flex justify-end">
         <div className="inline-flex">
           <AddToCartButton product={product} />
         </div>
       </div>
 
+      {/* Product description moved below button, with extra bottom margin to push footer down */}
+      <p className="text-gray-700 mt-2 mb-16">{product.description}</p>
+
       {reviews.length > 0 && (
         <section className="mt-12">
           <h2 className="text-2xl font-semibold mb-4">Reviews</h2>
-        <div className="space-y-6">
+          <div className="space-y-6">
             {reviews.map((rev) => (
               <div key={rev.id} className="border-b pb-4">
                 <div className="flex items-center justify-between mb-1">
