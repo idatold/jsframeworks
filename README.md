@@ -1,6 +1,23 @@
 # Pistachio Online Shop
 
-A fully‐functional e-commerce demo built with Next.js and TypeScript as part of the JavaScript Frameworks course assignment.
+![Pistachio Online Shop – product page](public/screenshots/pistachio-product.png)
+
+A fully-functional e-commerce demo built with Next.js and TypeScript as part of the JavaScript Frameworks course assignment. The goal is to practice modern React patterns, data fetching, client state, and accessible UI on a realistic shop.
+
+---
+
+## Description
+
+Pistachio lets users browse products, view rich product details, and manage a simple cart with a friendly, responsive UI. It uses the Noroff public API (no auth required) and common production patterns like state persistence, form validation, and optimized images.
+
+
+
+- Dynamic product pages with images, tags, description, price & discount
+- Search and sort for quick product discovery
+- Cart with increment/decrement/remove and a playful checkout success flow
+- Contact form with client-side validation and helpful toasts
+
+---
 
 ## 🚀 Features
 
@@ -15,7 +32,7 @@ A fully‐functional e-commerce demo built with Next.js and TypeScript as part o
   • Real-time filtering by title  
   • Sort by price (asc/desc) or name (A→Z / Z→A)
 - **Shopping Cart**  
-  • Global cart state via [Zustand] persisted to `localStorage`  
+  • Global cart state via Zustand persisted to `localStorage`  
   • Increment, decrement, or remove individual items with toasts  
   • Clear all & checkout flow → success page + toast
 - **Contact Form**  
@@ -30,95 +47,85 @@ A fully‐functional e-commerce demo built with Next.js and TypeScript as part o
   • Next.js `<Image>` optimized loading (configured in `next.config.js`)  
   • Mobile ↔ desktop responsive breakpoints
 
-## 📦 Tech Stack
+---
 
-- **Framework:** Next.js 15 + React 19
-- **Language:** TypeScript 5
-- **Styling:** Tailwind CSS 4
-- **State:** Zustand (with `persist`)
-- **Forms:** React Hook Form
-- **Notifications:** react-hot-toast
+## Built With
+
+- **Framework:** Next.js 15 + React 19  
+- **Language:** TypeScript 5  
+- **Styling:** Tailwind CSS 4  
+- **State:** Zustand (with `persist`)  
+- **Forms:** React Hook Form  
+- **Notifications:** react-hot-toast  
 - **HTTP:** axios
 
-## 🔧 Getting Started
+---
 
-### Prerequisites
+## Getting Started
 
-- Node.js >= 18
-- npm or yarn
+### Installing
 
-### Clone & Install
+Clone the repo:
+    git clone <YOUR-GITHUB-REPO-URL>
+    cd jsframeworks
 
-```bash
-git clone <YOUR-GITHUB-CLASSROOM-REPO-URL>
-cd jsframeworks
-npm install
-```
+Install dependencies (use the lockfile if present):
+    npm ci
+    # or
+    npm install
 
-### Install dependencies
+### Running
 
-```bash
-npm install
-```
+Start the dev server:
+    npm run dev
 
-### Run in development mode
+Build and run for production:
+    npm run build
+    npm start
 
-```bash
-npm run dev
-```
+Your app will be available at http://localhost:3000.
 
-### Build & start for production
-
-```bash
-npm run build
-npm run start
-```
-
-Your app will run on http://localhost:3000.
 
 ## ⚙️ Configuration
 
 **next.config.js**
 
-```js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "static.cloud.noroff.dev",
-        port: "",
-        pathname: "/api/online-shop/**",
+    /** @type {import('next').NextConfig} */
+    const nextConfig = {
+      images: {
+        remotePatterns: [
+          {
+            protocol: "https",
+            hostname: "static.cloud.noroff.dev",
+            port: "",
+            pathname: "/api/online-shop/**",
+          },
+        ],
       },
-    ],
-  },
-};
-export default nextConfig;
-```
+    };
+    export default nextConfig;
 
-## Fonts (`src/lib/fonts.ts`)
+### Fonts (`src/lib/fonts.ts`)
 
-```ts
-import { Chango, Roboto_Mono } from "next/font/google";
+    import { Chango, Roboto_Mono } from "next/font/google";
 
-interface NextFontWithVar {
-  className: string;
-  variable: string;
-}
+    interface NextFontWithVar {
+      className: string;
+      variable: string;
+    }
 
-export const chango = Chango({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-chango",
-}) as NextFontWithVar;
+    export const chango = Chango({
+      subsets: ["latin"],
+      weight: "400",
+      variable: "--font-chango",
+    }) as NextFontWithVar;
 
-export const robotoMono = Roboto_Mono({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-roboto-mono",
-}) as NextFontWithVar;
-```
+    export const robotoMono = Roboto_Mono({
+      subsets: ["latin"],
+      weight: ["400", "700"],
+      variable: "--font-roboto-mono",
+    }) as NextFontWithVar;
+
 
 ## 🔗 API Endpoints
 
@@ -127,6 +134,7 @@ export const robotoMono = Roboto_Mono({
 
 _No API key or auth needed._
 
+
 ## 🚀 Deployment
 
 Deploy easily to Vercel or Netlify:
@@ -134,33 +142,73 @@ Deploy easily to Vercel or Netlify:
 1. Push your repo to GitHub.
 2. Create a new project in Vercel or Netlify and link your repository.
 3. Use the default Next.js build settings:
-   ```bash
-   npm run build
-   ```
+   
+       npm run build
+
 4. Deploy!
 
 ## 📝 Project Structure
 
-```
-src/
-├─ app/
-│  ├─ layout.tsx               # Root layout + Toaster
-│  ├─ page.tsx                 # Home (with client wrapper)
-│  ├─ cart/page.tsx            # Cart page (client)
-│  └─ product/[id]/page.tsx    # Product details
-├─ components/
-│  ├─ Header.tsx
-│  ├─ Footer.tsx
-│  ├─ ProductCard.tsx
-│  ├─ AddToCartButton.tsx
-│  ├─ SearchBar.tsx
-│  └─ SortDropdown.tsx
-├─ lib/
-│  ├─ productApi.ts
-│  ├─ cartStore.ts
-│  └─ fonts.ts
-└─ styles/
-   └─ globals.css
-```
+    src/
+    ├─ app/
+    │  ├─ layout.tsx               # Root layout + Toaster
+    │  ├─ page.tsx                 # Home (with client wrapper)
+    │  ├─ cart/page.tsx            # Cart page (client)
+    │  └─ product/[id]/page.tsx    # Product details
+    ├─ components/
+    │  ├─ Header.tsx
+    │  ├─ Footer.tsx
+    │  ├─ ProductCard.tsx
+    │  ├─ AddToCartButton.tsx
+    │  ├─ SearchBar.tsx
+    │  └─ SortDropdown.tsx
+    ├─ lib/
+    │  ├─ productApi.ts
+    │  ├─ cartStore.ts
+    │  └─ fonts.ts
+    └─ styles/
+       └─ globals.css
 
-Happy coding! 🍐 (Ida @ Pistachio 🥜)
+
+## Built With
+
+- Next.js 15
+- React 19
+- TypeScript 5
+- Tailwind CSS 4
+- Zustand (persist)
+- React Hook Form
+- react-hot-toast
+- axios
+
+## Contributing
+
+This is a small educational project. If you want to contribute:
+
+1. Open an issue describing the change.
+2. Create a feature branch from `main`.
+3. Keep commits focused and include clear messages.
+4. Open a pull request for review.
+
+Thank you for keeping the code clean and accessible 💚
+
+
+## Contact
+
+- Portfolio: https://idatoldportfolio.netlify.app/
+- LinkedIn: <https://www.linkedin.com/in/ida-charlotte-loriann-toldn%C3%A6s-920190117/>
+- Email: <idatoldnaes@icloud.com>
+
+
+## License
+
+This repository is for educational purposes. If you plan to reuse parts of the code, please credit the author.  
+Add a LICENSE file (e.g., MIT) if you intend to open-source it.
+
+
+## Acknowledgments
+
+- Noroff API team for the public `online-shop` endpoints  
+- Next.js & Vercel for excellent tooling and docs  
+- React Hook Form, Zustand, and Tailwind communities for great DX  
+- Classmates and instructors for feedback and inspiration
