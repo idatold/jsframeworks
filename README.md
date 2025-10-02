@@ -1,6 +1,6 @@
 # Pistachio Online Shop
 
-![Pistachio Online Shop – product page](public/screenshots/pistachio-product.png)
+![Pistachio Online Shop ](public/pistachio-product.png)
 
 A fully-functional e-commerce demo built with Next.js and TypeScript as part of the JavaScript Frameworks course assignment. The goal is to practice modern React patterns, data fetching, client state, and accessible UI on a realistic shop.
 
